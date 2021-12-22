@@ -1,0 +1,279 @@
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.interactions.Actions;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+
+public class Assignment {
+
+	public static void main(String[] args) throws InterruptedException {
+		// TODO Auto-generated method stub
+		System.setProperty("webdriver.chrome.driver", "C:\\Users\\aksha\\Downloads\\chromedriver_win32\\chromedriver.exe" );
+		WebDriver driver= new ChromeDriver();
+		driver.get("http://www.qaclickacademy.com/practice.php");
+		
+		exerciseOne(driver);
+		exerciseTwo(driver);
+		exerciseThree(driver);
+		exerciseFour(driver);
+		exerciseFourPointOne(driver);
+		exerciseFourPointTwo(driver);
+		exerciseFive(driver);
+		exerciseSix(driver);
+                exerciseSeven(driver);
+                exerciseEight(driver);
+                exerciseNine(driver);
+ 
+	}
+	
+	public static void exerciseOne(WebDriver driver)
+	{
+		driver.findElement(By.xpath("//input[@value='radio1']")).click();
+	    System.out.println(driver.findElement(By.xpath("//input[@value='radio1']")).isSelected());
+		System.out.println(	driver.findElement(By.xpath("//input[@value='radio2']")).isSelected());
+		driver.findElement(By.xpath("//input[@value='radio3']")).click();
+		System.out.println(	driver.findElement(By.xpath("//input[@value='radio3']")).isSelected());
+	}
+	public static void exerciseTwo(WebDriver driver) throws InterruptedException
+	{
+		driver.findElement(By.id("autocomplete")).click();
+		driver.findElement(By.id("autocomplete")).sendKeys("United States");
+		Thread.sleep(2000);
+		List <WebElement> countries= driver.findElements(By.xpath("//ul/li[@class='ui-menu-item']"));
+		for(WebElement country:countries)
+		{
+			if(country.getText().equalsIgnoreCase("United States Minor Outlying Islands"))
+			{
+				country.click();
+				break;
+			}
+		}
+		System.out.println(driver.findElement(By.id("autocomplete")).getText());
+	}
+	public static void exerciseThree(WebDriver driver)
+	{
+		WebElement staticDrop=driver.findElement(By.id("dropdown-class-example"));
+		Select dropdown= new Select(staticDrop);
+		dropdown.selectByIndex(1);
+		System.out.println(dropdown.getFirstSelectedOption().getText());
+		String op1=dropdown.getFirstSelectedOption().getText();
+		if(op1.equals("Option1"))
+		{
+			System.out.println("Verified");
+ 		}
+		dropdown.selectByIndex(2);
+		System.out.println(dropdown.getFirstSelectedOption().getText());
+		String op2=dropdown.getFirstSelectedOption().getText();
+		if(op2.equals("Option2"))
+		{
+			System.out.println("Verified");
+ 		}
+		dropdown.selectByIndex(3);
+		System.out.println(dropdown.getFirstSelectedOption().getText());
+		String op3=dropdown.getFirstSelectedOption().getText();
+		if(op3.equals("Option1"))
+		{
+			System.out.println("Verified");
+ 		}
+		
+	}
+	public static void exerciseFour(WebDriver driver)
+	{
+	    driver.findElement(By.id("checkBoxOption1")).click();
+		boolean checkbox1=driver.findElement(By.id("checkBoxOption1")).isSelected();
+		if(checkbox1==true)
+		{
+			System.out.println("Checkbox1 is Checked");
+		}
+		driver.findElement(By.id("checkBoxOption1")).click();
+		boolean nocheckbox1=driver.findElement(By.id("checkBoxOption1")).isSelected();
+		if(nocheckbox1==false)
+		{
+			System.out.println("Checkbox1 is Unchecked");
+		}
+		
+		driver.findElement(By.id("checkBoxOption2")).click();
+		boolean checkbox2=driver.findElement(By.id("checkBoxOption2")).isSelected();
+		if(checkbox1==true)
+		{
+			System.out.println("Checkbox2 is Checked");
+		}
+		driver.findElement(By.id("checkBoxOption2")).click();
+		boolean nocheckbox2=driver.findElement(By.id("checkBoxOption2")).isSelected();
+		if(nocheckbox2==false)
+		{
+			System.out.println("Checkbox2 is Unchecked");
+		}
+		
+		driver.findElement(By.id("checkBoxOption3")).click();
+		boolean checkbox3=driver.findElement(By.id("checkBoxOption3")).isSelected();
+		if(checkbox3==true)
+		{
+			System.out.println("Checkbox3 is Checked");
+		}
+		driver.findElement(By.id("checkBoxOption3")).click();
+		boolean nocheckbox3=driver.findElement(By.id("checkBoxOption3")).isSelected();
+		if(nocheckbox3==false)
+		{
+			System.out.println("Checkbox3 is Unchecked");
+		}
+	}
+	public static void exerciseFourPointOne(WebDriver driver) throws InterruptedException
+	{
+		driver.findElement(By.id("checkBoxOption1")).click();
+		boolean checkbox1=driver.findElement(By.id("checkBoxOption1")).isSelected();
+		
+		driver.findElement(By.id("checkBoxOption2")).click();
+		boolean checkbox2=driver.findElement(By.id("checkBoxOption2")).isSelected();
+		
+		driver.findElement(By.id("checkBoxOption3")).click();
+		boolean checkbox3=driver.findElement(By.id("checkBoxOption3")).isSelected();
+		
+		if(checkbox1 && checkbox2 && checkbox3==true)
+		{
+			System.out.println("All Checkboxes are selected");
+		}
+		Thread.sleep(2000);
+	}
+	
+	public static void exerciseFourPointTwo(WebDriver driver)
+	{
+		driver.findElement(By.id("checkBoxOption1")).click();
+		boolean checkbox1=driver.findElement(By.id("checkBoxOption1")).isSelected();
+		
+		driver.findElement(By.id("checkBoxOption2")).click();
+		boolean checkbox2=driver.findElement(By.id("checkBoxOption2")).isSelected();
+		
+		driver.findElement(By.id("checkBoxOption3")).click();
+		boolean checkbox3=driver.findElement(By.id("checkBoxOption3")).isSelected();
+		
+		if(checkbox1&& checkbox2 && checkbox3==false)
+		{
+			System.out.println("All Checkboxes are not selected");
+		}
+	}
+	public static void exerciseFive(WebDriver driver)
+	{   
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		driver.findElement(By.id("openwindow")).click();
+		driver.manage().window().maximize();
+		Set<String> Windows=driver.getWindowHandles();
+		Iterator<String> it= Windows.iterator();
+		String ParentWindow=it.next();
+		String ChildWindow=it.next();
+        driver.switchTo().window(ChildWindow);
+        String ChildTitle=driver.getTitle();
+        System.out.println(ChildTitle);
+        if(ChildTitle.equals("QA Click Academy | Selenium,Jmeter,SoapUI,Appium,Database testing,QA Training Academy"))
+        {
+            System.out.println("Child Window title is verified");
+        }
+        driver.close();
+        driver.switchTo().window(ParentWindow);
+        String ParentTitle=driver.getTitle();
+        System.out.println(ParentTitle);
+        if(ParentTitle.equals("Practice Page"))
+        {
+            System.out.println("Parent Window title is verified");
+        }
+		
+	}
+	public static void exerciseSix(WebDriver driver)
+	{
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		driver.findElement(By.id("opentab")).click();
+		Set<String> Windows1=driver.getWindowHandles();
+		Iterator<String> it1= Windows1.iterator();
+		String ParentTab=it1.next();
+		String ChildTab=it1.next();
+        driver.switchTo().window(ChildTab);
+        String ChildTitle=driver.getTitle();
+        System.out.println(ChildTitle);
+        if(ChildTitle.equals("Rahul Shetty Academy"))
+        {
+        	System.out.println("Child Tab title is verified");
+        }
+        driver.close();
+        driver.switchTo().window(ParentTab);
+        String ParentTitle=driver.getTitle();
+        System.out.println(ParentTitle);
+         if(ParentTitle.equals("Practice Page"))
+        {
+            System.out.println("Parent Tab title is verified");
+        }
+      
+	} 
+        public static void main exerciseSeven(WebDriver driver)
+        {
+        driver.findElement(By.xpath("//input[@id='name']")).sendKeys("Akshay");
+		driver.findElement(By.id("alertbtn")).click();
+		System.out.println(driver.switchTo().alert().getText());
+		String name=driver.switchTo().alert().getText();
+		if(name.equalsIgnoreCase("Hello Akshay, share this practice page and share your knowledge"))
+		{
+		   System.out.println("Verified");
+		}
+		driver.switchTo().alert().accept();
+        
+        }
+        public static void exerciseEight(WebDriver driver){
+	JavascriptExecutor je = (JavascriptExecutor) driver;
+	je.executeScript("window.scroll(0,600)");
+	WebElement table = driver.findElement(By.id("product"));
+	List<WebElement> first = table.findElements(By.tagName("tr")).get(0).findElements(By.tagName("th"));
+	System.out.println(first.get(0).getText());
+	System.out.println(first.get(1).getText());
+	System.out.println(first.get(2).getText());
+	List<WebElement> second= table.findElements(By.tagName("tr")).get(1).findElements(By.tagName("td"));
+	System.out.println(second.get(0).getText());
+	System.out.println(second.get(1).getText());
+	System.out.println(second.get(2).getText());
+	List<WebElement> third = table.findElements(By.tagName("tr")).get(2).findElements(By.tagName("td"));
+	System.out.println(third .get(0).getText());
+	System.out.println( third .get(1).getText());
+	System.out.println( third .get(2).getText());
+	List<WebElement> four = table.findElements(By.tagName("tr")).get(3).findElements(By.tagName("td"));
+	System.out.println(four.get(0).getText());
+	System.out.println(four.get(1).getText());
+	System.out.println(four.get(2).getText());
+	List<WebElement> fifth = table.findElements(By.tagName("tr")).get(4).findElements(By.tagName("td"));
+	System.out.println(fifth.get(0).getText());
+	System.out.println(fifth.get(1).getText());
+	System.out.println(fifth.get(2).getText());
+	List<WebElement> sixth = table.findElements(By.tagName("tr")).get(5).findElements(By.tagName("td"));
+	System.out.println(sixth.get(0).getText());
+	System.out.println(sixth.get(1).getText());
+	System.out.println(sixth.get(2).getText());
+	List<WebElement> seventh = table.findElements(By.tagName("tr")).get(6).findElements(By.tagName("td"));
+	System.out.println(seventh.get(0).getText());
+	System.out.println(seventh.get(1).getText());
+	System.out.println(serventh.get(2).getText());
+	List<WebElement> eigth = table.findElements(By.tagName("tr")).get(9).findElements(By.tagName("td"));
+	System.out.println(eigth.get(0).getText());
+	System.out.println(eigth.get(1).getText());
+	System.out.println(eigth.get(2).getText());
+	List<WebElement> nine = table.findElements(By.tagName("tr")).get(10).findElements(By.tagName("td"));
+	System.out.println(nine.get(0).getText());
+	System.out.println(nine.get(1).getText());
+	System.out.println(nine.get(2).getText());
+	}
+
+        public static void main exerciseNine(WebDriver driver)
+        {
+        Actions ac=new Actions(driver);
+        WebElement e1=driver.findElement(By.id("mousehover"));
+        ac.moveToElement(e).build().perform();
+        ac.click().build().perform();
+        WebElement e=driver.findElement(By.linkText("Top"));
+        ac.moveToElement(e1);
+        ac.click().build().perform();
+	}
+	
+}
